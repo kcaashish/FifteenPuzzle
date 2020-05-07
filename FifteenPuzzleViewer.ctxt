@@ -1,0 +1,12 @@
+#BlueJ class context
+comment0.target=FifteenPuzzleViewer
+comment1.params=puzzle
+comment1.target=FifteenPuzzleViewer(FifteenPuzzle)
+comment1.text=\r\n\ Sets\ up\ the\ three\ fields\ and\ draws\ the\ initial\ puzzle.\r\n
+comment2.params=
+comment2.target=void\ drawGrid()
+comment2.text=\r\n\ Draws\ all\ of\ the\ tiles\ on\ sc.\r\n
+comment3.params=x\ y\ c
+comment3.target=void\ drawTile(int,\ int,\ java.awt.Color)
+comment3.text=\r\n\ Draws\ the\ tile\ at\ x,y\ in\ colour\ c\ at\ the\ appropriate\ spot\ on\ sc.\r\n
+numComments=4
