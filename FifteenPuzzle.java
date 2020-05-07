@@ -11,7 +11,7 @@
 public class FifteenPuzzle
 { 
     private       int[][] grid; // the current positions of the tiles and the space, denoted by 0..15
-    private       int xSpace;   // xspace,yspace are the current coordinates of the space
+    private       int xSpace;   // xSpace,ySpace are the current coordinates of the space
     private       int ySpace;
     private final int size = 4; // the number of tiles across and down 
     private final int[][] goal = {{1,5,9,13}, {2,6,10,14}, {3,7,11,15}, {4,8,12,0}}; // the tile positions in the goal state
@@ -20,13 +20,24 @@ public class FifteenPuzzle
     // when creating an object, enter e.g. FifteenPuzzle.close4 in the argument box
     public static final int[][] example4 = {{ 5,11,14, 0}, { 9, 3,13, 7}, { 2, 8,10,12}, { 4, 1,15, 6}};
     public static final int[][] close4   = {{ 1, 5, 9,13}, { 2, 6,10,14}, { 3, 7,11, 0}, { 4, 8,12,15}};
-    
+
+    public boolean initialising = false;
+
     /** This constructor sets up the grid using initialGrid, and it initialises xSpace and ySpace.
      *  initialGrid is assumed to be a legal position.
      */
     public FifteenPuzzle (int[][] initialGrid)
     {
-        // TODO 1
+        grid = initialGrid;
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                assert grid != null;
+                if (grid[i][j] == 0) {
+                    xSpace = i;
+                    ySpace = j;
+                }
+            }
+        }
     }
     
     /** This constructor sets up the grid by copying goal and then making random moves. 
@@ -52,11 +63,29 @@ public class FifteenPuzzle
     {
         return size;
     }
+
+    public boolean isBlank (int x, int y)
+    {
+        return (grid[x][y] == 0);
+    }
+
+    public int[] getSpaceCoordinate (){
+        int[] spaceCoordinate = new int[2];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (grid[i][j] == 0) {
+                    spaceCoordinate[0] = i;
+                    spaceCoordinate[1] = j;
+                }
+            }
+        }
+        return spaceCoordinate;
+    }
        
     /**
      * Returns true iff x,y is on the board and adjacent to the space. 
-     * Either x must be xspace and y must be yspace plus or minus 1, 
-     * or     y must be yspace and x must be xspace plus or minus 1.
+     * Either x must be xSpace and y must be ySpace plus or minus 1,
+     * or     y must be ySpace and x must be xSpace plus or minus 1.
      */
     public boolean legalClick(int x, int y)
     {
