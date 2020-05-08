@@ -8,7 +8,7 @@
 import java.awt.event.*;
 import java.awt.*;
 
-public class FifteenPuzzleViewer 
+public class FifteenPuzzleViewer implements MouseListener
 {
     private FifteenPuzzle puzzle; // the internal puzzle 
     private int           size;   // the size of the puzzle
@@ -102,5 +102,80 @@ public class FifteenPuzzleViewer
                 sc.drawString(number, left + 30, top + 63, colour);
             }
         }
+    }
+
+    private void changeTileColour (int x, int y)
+    {
+        Color colour;
+        int top = border + y * (tileSize + padding);
+        int bot = border + (y+1) * (tileSize + padding) - padding;
+        int left = border + x * (tileSize + padding);
+        int right = border + (x+1) * (tileSize + padding) - padding;
+        int number = puzzle.getGrid()[x][y];
+
+        for (int i = 0; i < 30; i++){
+            if (puzzle.isBlank(x, y)) {
+                colour = BACK_COLOUR;
+            }
+            else {
+                if (puzzle.legalClick(x, y)){
+                    colour = Color.green.darker();
+                }
+                else {
+                    colour = Color.decode("#9F0000");
+                }
+            }
+            sc.drawRectangle(left - (10-i), top - (10-i), right  + (10-i), bot + (10-i), colour);
+        }
+
+        colour = BACK_COLOUR;
+        if (number < 10){
+            sc.drawString("" + number, left + 42, top + 63, colour);
+        }
+        else {
+            sc.drawString("" + number, left + 30, top + 63, colour);
+        }
+
+    }
+
+    private boolean tileClicked (int x, int y)
+    {
+        if ((x > border) && x < squareSize - border &&
+                !((x < (border + tileSize + padding)) && (x > (border + tileSize))) &&
+                !((x < border + 2 * tileSize + 2 * padding) && (x > border + 2 * tileSize + padding)) &&
+                !((x < border + 3 * tileSize + 3 * padding) && (x > border + 3 * tileSize + 2 * padding)) &&
+                (y > border) && (y < (squareSize - border)) &&
+                !((y < border + tileSize + padding) && (y > border + tileSize)) &&
+                !((y < border + 2 * tileSize + 2 * padding) && (y > border + 2 * tileSize + padding)) &&
+                !((y < border + 3 * tileSize + 3 * padding) && (y > border + 3 * tileSize + 2 * padding)))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent mouseEvent) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent mouseEvent) {
+
     }
 }

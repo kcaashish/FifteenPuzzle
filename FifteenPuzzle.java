@@ -8,6 +8,8 @@
  * @version May 2020
  */
 
+import java.util.Arrays;
+
 public class FifteenPuzzle
 { 
     private       int[][] grid; // the current positions of the tiles and the space, denoted by 0..15
@@ -69,7 +71,8 @@ public class FifteenPuzzle
         return (grid[x][y] == 0);
     }
 
-    public int[] getSpaceCoordinate (){
+    public int[] getSpaceCoordinate ()
+    {
         int[] spaceCoordinate = new int[2];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -89,8 +92,7 @@ public class FifteenPuzzle
      */
     public boolean legalClick(int x, int y)
     {
-        // TODO 5
-        return true;
+        return Math.abs((x - xSpace)) + Math.abs(y - ySpace) == 1;
     }
     
     /**
@@ -98,8 +100,7 @@ public class FifteenPuzzle
      */
     public boolean finished()
     {
-        // TODO 7
-        return false;
+        return Arrays.deepEquals(goal, grid);
     }
     
     /**
@@ -108,6 +109,14 @@ public class FifteenPuzzle
      */ 
     public void moveTile (int x, int y) 
     {
-        // TODO 6
+        if (!(finished())|| initialising) {
+            if (legalClick(x, y)) {
+                grid[xSpace][ySpace] = grid[x][y];
+                grid[x][y] = 0;
+
+                xSpace = x;
+                ySpace = y;
+            }
+        }
     }
 }
