@@ -18,6 +18,8 @@ public class FifteenPuzzleViewer implements MouseListener
     private final static Color TILE_COLOUR = Color.decode("#185566");
     private final static Color GRID_COLOUR = Color.black;
 
+    private int mouseClickX;
+    private int mouseClickY;
     private final int tileSize = 100;
     private final int border = 50;
     private final int padding = 30;
@@ -25,7 +27,7 @@ public class FifteenPuzzleViewer implements MouseListener
     private int squareSize = 0;
 
     public static void main (String[] args){
-        new FifteenPuzzleViewer(new FifteenPuzzle());
+        new FifteenPuzzleViewer(new FifteenPuzzle(FifteenPuzzle.close4));
     }
     
     /**
@@ -39,7 +41,7 @@ public class FifteenPuzzleViewer implements MouseListener
         gridSize = size * tileSize;
         squareSize = gridSize + border * 2 + padding * (size - 1);
         sc = new SimpleCanvas("FifteenPuzzle", squareSize,  squareSize + 30, BACK_COLOUR);
-
+        sc.addMouseListener(this);
         fontSize(3);
         drawGrid();
     }
@@ -155,27 +157,44 @@ public class FifteenPuzzleViewer implements MouseListener
     }
 
     @Override
-    public void mouseClicked(MouseEvent mouseEvent) {
+    public void mouseClicked(MouseEvent e) {
 
     }
 
     @Override
-    public void mousePressed(MouseEvent mouseEvent) {
+    public void mousePressed(MouseEvent e) {
+        if (!puzzle.finished() && !puzzle.initialising){
+            if (tileClicked(e.getX(), e.getY())){
+                changeTileColour((e.getX() - border) / (tileSize + padding), (e.getY() - border) / (tileSize + padding));
+            }
+        }
+        mouseClickX = (e.getX() - border) / (tileSize + padding);
+        mouseClickY = (e.getY() - border) / (tileSize + padding);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if (!puzzle.finished() && !puzzle.initialising) {
+            if (puzzle.legalClick(mouseClickX, mouseClickY)){
+                if (tileClicked(e.getX(), e.getY())){
+                    puzzle.moveTile((e.getX() - border) / (tileSize + padding), (e.getY() - border) / (tileSize + padding));
+                }
+            }
+            drawGrid();
+            if (puzzle.finished()){
+                System.out.println("You Win!");
+            }
+        }
 
     }
 
     @Override
-    public void mouseReleased(MouseEvent mouseEvent) {
+    public void mouseEntered(MouseEvent e) {
 
     }
 
     @Override
-    public void mouseEntered(MouseEvent mouseEvent) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent mouseEvent) {
+    public void mouseExited(MouseEvent e) {
 
     }
 }
