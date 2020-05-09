@@ -23,8 +23,8 @@ public class FifteenPuzzleViewer implements MouseListener
     private final int tileSize = 100;
     private final int border = 50;
     private final int padding = 30;
-    private int gridSize;
-    private int squareSize;
+    private final int gridSize;
+    private final int squareSize;
 
     public static void main (String[] args){
         new FifteenPuzzleViewer(new FifteenPuzzle(FifteenPuzzle.close4));
