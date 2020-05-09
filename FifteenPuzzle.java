@@ -9,6 +9,7 @@
  */
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class FifteenPuzzle
 { 
@@ -47,6 +48,26 @@ public class FifteenPuzzle
      */
     public FifteenPuzzle ()
     {
+        initialising = true;
+        grid = goal.clone();
+
+        xSpace = size - 1;
+        ySpace = size - 1;
+
+        for (double i = 0; i < 1600; i++){
+            int a = (int) (Math.random() * (double) size);
+            int b = (int) (Math.random() * (double) size);
+
+            if (legalClick(a, b)){
+                moveTile(a, b);
+                try{
+                    TimeUnit.MICROSECONDS.sleep(100);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
+        initialising = false;
         // TODO 8
     }
     

@@ -27,7 +27,7 @@ public class FifteenPuzzleViewer implements MouseListener
     private final int squareSize;
 
     public static void main (String[] args){
-        new FifteenPuzzleViewer(new FifteenPuzzle(FifteenPuzzle.close4));
+        new FifteenPuzzleViewer(new FifteenPuzzle());
     }
     
     /**
