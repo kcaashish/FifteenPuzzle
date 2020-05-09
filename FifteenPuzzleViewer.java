@@ -10,9 +10,9 @@ import java.awt.*;
 
 public class FifteenPuzzleViewer implements MouseListener
 {
-    private FifteenPuzzle puzzle; // the internal puzzle 
-    private int           size;   // the size of the puzzle
-    private SimpleCanvas  sc;     // the canvas for display
+    private final FifteenPuzzle puzzle; // the internal puzzle
+    private final int           size;   // the size of the puzzle
+    private final SimpleCanvas  sc;     // the canvas for display
 
     private final static Color BACK_COLOUR = Color.decode("#D5E7FF");
     private final static Color TILE_COLOUR = Color.decode("#185566");
@@ -23,8 +23,8 @@ public class FifteenPuzzleViewer implements MouseListener
     private final int tileSize = 100;
     private final int border = 50;
     private final int padding = 30;
-    private int gridSize = 0;
-    private int squareSize = 0;
+    private int gridSize;
+    private int squareSize;
 
     public static void main (String[] args){
         new FifteenPuzzleViewer(new FifteenPuzzle(FifteenPuzzle.close4));
@@ -175,6 +175,34 @@ public class FifteenPuzzleViewer implements MouseListener
         sc.drawString("Play Again", squareSize / 2 - 90, squareSize-padding-3, Color.decode("#D5E7FF"));
     }
 
+    private boolean resetClick (int x, int y)
+    {
+        int resetX1 = (squareSize/2 - 80);
+        int resetX2 = (squareSize / 2 + 50);
+        int resetY1 = squareSize - tileSize + padding - 5;
+        int resetY2 = squareSize - padding + 10;
+
+        return (resetX1 < x && x < resetX2 && resetY1 < y && y < resetY2);
+    }
+
+    public void resetGame()
+    {
+        puzzle.initialising = true;
+        sc.drawRectangle(0, 0, squareSize, squareSize + 35, BACK_COLOUR);
+
+        for (double i = 0; i < 1600; i++){
+            int a = (int) (Math.random() * (double) size);
+            int b = (int) (Math.random() * (double) size);
+
+            if (puzzle.legalClick(a, b)){
+                puzzle.moveTile(a, b);
+            }
+        }
+        puzzle.initialising = false;
+        drawGrid();
+        System.out.println("Game will now reset");
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -205,7 +233,9 @@ public class FifteenPuzzleViewer implements MouseListener
                 win();
             }
         }
-
+        if (resetClick(e.getX(), e.getY()) && puzzle.finished()){
+            resetGame();
+        }
     }
 
     @Override
