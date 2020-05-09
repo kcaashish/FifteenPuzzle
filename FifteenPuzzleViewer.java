@@ -1,7 +1,7 @@
 /**
- * FifteenPuzzleViewer displays a 15 puzzle and interacts with the user.
- * 
- * @author Aashish K.C.
+  FifteenPuzzleViewer displays a 15 puzzle and interacts with the user.
+
+  @author Aashish K.C.
  * @version May 2020
  */
 
@@ -156,6 +156,25 @@ public class FifteenPuzzleViewer implements MouseListener
         return false;
     }
 
+    private void win()
+    {
+        sc.wait(200);
+        sc.drawRectangle(0, 0, squareSize, squareSize+35, Color.decode("#313030"));
+
+        fontSize(1);
+        sc.drawString("Congratulations!", (squareSize / 2) - (int)(gridSize / 1.5) + 115, (squareSize / 2) - 100, Color.decode("#FF950E"));
+        fontSize(2.5);
+        sc.drawString("You win!", (squareSize / 2) - (int)(gridSize / 1.5) + 75, (squareSize / 2) + 10, Color.decode("#FF950E"));
+
+        int resetX1 = (squareSize/2 - 70) - 30;
+        int resetX2 = (squareSize / 2 - 70) + 160;
+        int resetY1 = squareSize - tileSize + padding;
+        int resetY2 = squareSize - padding + 10;
+        sc.drawRectangle(resetX1, resetY1, resetX2, resetY2, Color.decode("#03001B"));
+        fontSize(0.36);
+        sc.drawString("Play Again", squareSize / 2 - 90, squareSize-padding-3, Color.decode("#D5E7FF"));
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -183,6 +202,7 @@ public class FifteenPuzzleViewer implements MouseListener
             drawGrid();
             if (puzzle.finished()){
                 System.out.println("You Win!");
+                win();
             }
         }
 
