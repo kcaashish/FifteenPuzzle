@@ -1,7 +1,7 @@
-/**
-  FifteenPuzzleViewer displays a 15 puzzle and interacts with the user.
-
-  @author Aashish K.C.
+/*
+ * FifteenPuzzleViewer displays a 15 puzzle and interacts with the user.
+ *
+ * @author Aashish K.C.
  * @version May 2020
  */
 
@@ -46,6 +46,9 @@ public class FifteenPuzzleViewer implements MouseListener
         drawGrid();
     }
 
+    /**
+     * Increases the font by a factor of x.
+     */
     private void fontSize(double x){
         sc.setFont(sc.getFont().deriveFont((float) (sc.getFont().getSize() * x)));
     }
@@ -106,6 +109,9 @@ public class FifteenPuzzleViewer implements MouseListener
         }
     }
 
+    /**
+     * Changes the colour of tile to Green for legal click and red for illegal one.
+     */
     private void changeTileColour (int x, int y)
     {
         Color colour;
@@ -140,6 +146,9 @@ public class FifteenPuzzleViewer implements MouseListener
 
     }
 
+    /**
+     * Returns true if the tile is clicked.
+     */
     private boolean tileClicked (int x, int y)
     {
         if ((x > border) && x < squareSize - border &&
@@ -156,6 +165,9 @@ public class FifteenPuzzleViewer implements MouseListener
         return false;
     }
 
+    /**
+     * Draws the 'You win!' page after the puzzle get finished.
+     */
     private void win()
     {
         sc.wait(200);
@@ -175,6 +187,9 @@ public class FifteenPuzzleViewer implements MouseListener
         sc.drawString("Play Again", squareSize / 2 - 90, squareSize-padding-3, Color.decode("#D5E7FF"));
     }
 
+    /**
+     * Checks if the 'Play Again' button is pressed.
+     */
     private boolean resetClick (int x, int y)
     {
         int resetX1 = (squareSize/2 - 80);
@@ -185,6 +200,9 @@ public class FifteenPuzzleViewer implements MouseListener
         return (resetX1 < x && x < resetX2 && resetY1 < y && y < resetY2);
     }
 
+    /**
+     * Resets the game to the start.
+     */
     public void resetGame()
     {
         puzzle.initialising = true;

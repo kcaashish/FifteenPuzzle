@@ -1,4 +1,4 @@
-/**
+/*
  * FifteenPuzzle maintains the internal representation of a 15 puzzle. 
  * This is a 4x4 2D array of integers, numbered 0..15. 0 denotes the space. 
  * A legal move is to shift the space to an adjacent square on the grid. 
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class FifteenPuzzle
 { 
-    private       int[][] grid; // the current positions of the tiles and the space, denoted by 0..15
+    private final int[][] grid; // the current positions of the tiles and the space, denoted by 0..15
     private       int xSpace;   // xSpace,ySpace are the current coordinates of the space
     private       int ySpace;
     private final int size = 4; // the number of tiles across and down 
@@ -49,7 +49,11 @@ public class FifteenPuzzle
     public FifteenPuzzle ()
     {
         initialising = true;
-        grid = goal.clone();
+        grid = new int[size][size];
+
+        for (int i = 0; i < size; i++) {
+            System.arraycopy(goal[i], 0, grid[i], 0, size);
+        }
 
         xSpace = size - 1;
         ySpace = size - 1;
@@ -68,7 +72,6 @@ public class FifteenPuzzle
             }
         }
         initialising = false;
-        // TODO 8
     }
     
     /**
@@ -87,11 +90,17 @@ public class FifteenPuzzle
         return size;
     }
 
+    /**
+     * Returns true if the current location is blank.
+     */
     public boolean isBlank (int x, int y)
     {
         return (grid[x][y] == 0);
     }
 
+    /**
+     * Returns the coordinates of the space.
+     */
     public int[] getSpaceCoordinate ()
     {
         int[] spaceCoordinate = new int[2];
