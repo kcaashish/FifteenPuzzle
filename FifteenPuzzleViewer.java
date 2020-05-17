@@ -42,15 +42,15 @@ public class FifteenPuzzleViewer implements MouseListener
         squareSize = gridSize + border * 2 + padding * (size - 1);
         sc = new SimpleCanvas("FifteenPuzzle", squareSize,  squareSize + 30, BACK_COLOUR);
         sc.addMouseListener(this);
-        fontSize(3);
+        fontSize(40);
         drawGrid();
     }
 
     /**
-     * Increases the font by a factor of x.
+     * Changes the font to the size x.
      */
-    private void fontSize(double x){
-        sc.setFont(sc.getFont().deriveFont((float) (sc.getFont().getSize() * x)));
+    private void fontSize(int x){
+        sc.setFont(new Font(sc.getFont().getFontName(), Font.PLAIN, x));
     }
     
     /**
@@ -173,17 +173,17 @@ public class FifteenPuzzleViewer implements MouseListener
         sc.wait(200);
         sc.drawRectangle(0, 0, squareSize, squareSize+35, Color.decode("#313030"));
 
-        fontSize(1);
-        sc.drawString("Congratulations!", (squareSize / 2) - (int)(gridSize / 1.5) + 115, (squareSize / 2) - 100, Color.decode("#FF950E"));
-        fontSize(2.5);
-        sc.drawString("You win!", (squareSize / 2) - (int)(gridSize / 1.5) + 75, (squareSize / 2) + 10, Color.decode("#FF950E"));
+        fontSize(40);
+        sc.drawString("Congratulations!", (squareSize / 2) - (int)(gridSize / 1.5) + 100, (squareSize / 2) - 100, Color.decode("#FF950E"));
+        fontSize(60);
+        sc.drawString("You win!", (squareSize / 2) - (int)(gridSize / 1.5) + 135, (squareSize / 2) + 10, Color.decode("#FF950E"));
 
         int resetX1 = (squareSize/2 - 70) - 30;
-        int resetX2 = (squareSize / 2 - 70) + 160;
+        int resetX2 = (squareSize / 2 - 70) + 170;
         int resetY1 = squareSize - tileSize + padding;
         int resetY2 = squareSize - padding + 10;
         sc.drawRectangle(resetX1, resetY1, resetX2, resetY2, Color.decode("#03001B"));
-        fontSize(0.36);
+        fontSize(35);
         sc.drawString("Play Again", squareSize / 2 - 90, squareSize-padding-3, Color.decode("#D5E7FF"));
     }
 
